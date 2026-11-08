@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090a12">
+  <meta name="description" content="Absterbyte Studios — des jeux ambitieux, réinventés pour NumWorks.">
+  <title>Absterbyte Studios — Jeux NumWorks</title>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #090a12;
+      --panel: #11131f;
+      --text: #f4f5ff;
+      --muted: #a4a8bd;
+      --cyan: #38f5e1;
+      --pink: #ff45ba;
+      --purple: #9272ff;
+      --line: rgba(255, 255, 255, .12);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(ellipse at 12% 8%, rgba(146, 114, 255, .13), transparent 34rem),
+        radial-gradient(ellipse at 92% 24%, rgba(56, 245, 225, .08), transparent 30rem),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    a { color: inherit; }
+    .wrap { width: min(1120px, calc(100% - 40px)); margin-inline: auto; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(9, 10, 18, .82);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav {
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      text-decoration: none;
+      font-weight: 850;
+      letter-spacing: -.04em;
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      border-radius: 11px;
+      color: #080a10;
+      background: linear-gradient(135deg, var(--cyan), var(--purple) 58%, var(--pink));
+      box-shadow: 0 0 22px rgba(56, 245, 225, .25);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: clamp(12px, 2.5vw, 28px);
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: .9rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: color .2s ease;
+    }
+
+    .nav-links a:hover { color: var(--cyan); }
+
+    .lang-button, .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px 16px;
+      border: 1px solid rgba(56, 245, 225, .45);
+      border-radius: 10px;
+      background: rgba(56, 245, 225, .08);
+      color: var(--text);
+      font: inherit;
+      font-size: .9rem;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+
+    .lang-button { padding: 8px 11px; }
+    .button:hover, .lang-button:hover {
+      transform: translateY(-2px);
+      background: rgba(56, 245, 225, .15);
+      box-shadow: 0 0 22px rgba(56, 245, 225, .16);
+    }
+
+    .button-primary {
+      color: #080a10;
+      border: 0;
+      background: linear-gradient(105deg, var(--cyan), #8cf6d6);
+    }
+
+    .button-primary:hover { background: linear-gradient(105deg, #72fff0, #b2ffe8); }
+
+    .hero {
+      min-height: 590px;
+      display: grid;
+      align-items: center;
+      padding: 90px 0 100px;
+    }
+
+    .hero-content { max-width: 790px; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--cyan);
+      font-size: .78rem;
+      font-weight: 850;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 24px;
+      height: 2px;
+      background: var(--cyan);
+      box-shadow: 0 0 12px var(--cyan);
+    }
+
+    h1 {
+      max-width: 780px;
+      margin: 20px 0;
+      font-size: clamp(3rem, 8vw, 6.7rem);
+      line-height: .98;
+      letter-spacing: -.075em;
+    }
+
+    .gradient-text {
+      color: transparent;
+      background: linear-gradient(90deg, var(--cyan), #a78bff 60%, var(--pink));
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+
+    .hero p, .section-intro {
+      max-width: 650px;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.18rem);
+    }
+
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+
+    section { padding: 76px 0; scroll-margin-top: 80px; }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      margin: 10px 0 0;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      line-height: 1.08;
+      letter-spacing: -.055em;
+    }
+
+    .section-intro { margin: 12px 0 0; font-size: 1rem; }
+
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .game-card, .news-card, .contact-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: linear-gradient(145deg, rgba(20, 23, 37, .96), rgba(13, 14, 23, .96));
+    }
+
+    .game-art {
+      min-height: 205px;
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(56, 245, 225, .19), transparent 34%),
+        linear-gradient(135deg, rgba(56, 245, 225, .10), rgba(146, 114, 255, .16), rgba(255, 69, 186, .10));
+    }
+
+    .game-art::before, .game-art::after {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border: 1px solid rgba(255,255,255,.15);
+      transform: rotate(45deg);
+    }
+
+    .game-art::after { width: 150px; height: 150px; border-color: rgba(56,245,225,.3); }
+
+    .game-icon {
+      z-index: 1;
+      font-size: 4.2rem;
+      filter: drop-shadow(0 0 22px rgba(56, 245, 225, .35));
+    }
+
+    .game-body { padding: 24px; }
+    .game-title-row { display: flex; align-items: start; justify-content: space-between; gap: 12px; }
+
+    h3 { margin: 0; font-size: 1.28rem; line-height: 1.3; letter-spacing: -.025em; }
+    .game-body p, .news-card p, .contact-card p { color: var(--muted); }
+
+    .badge {
+      flex: 0 0 auto;
+      padding: 5px 9px;
+      border: 1px solid rgba(56,245,225,.35);
+      border-radius: 999px;
+      color: var(--cyan);
+      background: rgba(56,245,225,.08);
+      font-size: .72rem;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    .badge-beta {
+      color: #ffc76a;
+      border-color: rgba(255,199,106,.35);
+      background: rgba(255,199,106,.08);
+    }
+
+    .game-body .button { margin-top: 8px; }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .news-card { padding: 24px; }
+    .news-label {
+      color: var(--pink);
+      font-size: .76rem;
+      font-weight: 850;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .news-card h3 { margin-top: 10px; }
+    .contact-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+      padding: clamp(24px, 5vw, 48px);
+      border-color: rgba(146, 114, 255, .3);
+      background:
+        radial-gradient(ellipse at 90% 20%, rgba(146,114,255,.14), transparent 50%),
+        var(--panel);
+    }
+
+    .contact-card p { max-width: 570px; }
+    .contact-card .button { white-space: nowrap; }
+
+    footer {
+      padding: 26px 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: .86rem;
+    }
+
+    .footer-inner { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .footer-inner a { color: var(--cyan); text-decoration: none; }
+
+    @media (max-width: 720px) {
+      .nav { align-items: flex-start; flex-direction: column; padding: 15px 0; }
+      .nav-links { justify-content: flex-start; gap: 12px 18px; }
+      .hero { min-height: auto; padding: 76px 0 82px; }
+      .game-grid, .news-grid { grid-template-columns: 1fr; }
+      .section-heading { align-items: flex-start; flex-direction: column; }
+      .contact-card { align-items: flex-start; flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <nav class="nav wrap" aria-label="Navigation principale">
+      <a class="brand" href="#home" aria-label="Absterbyte Studios — accueil">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span>ABSTERBYTE <span class="gradient-text">STUDIOS</span></span>
+      </a>
+
+      <div class="nav-links">
+        <a href="#home" data-fr="Accueil" data-en="Home">Accueil</a>
+        <a href="#games" data-fr="Jeux" data-en="Games">Jeux</a>
+        <a href="#news" data-fr="Actualités" data-en="News">Actualités</a>
+        <a href="#contact" data-fr="Contact" data-en="Contact">Contact</a>
+        <button class="lang-button" id="language-toggle" type="button" aria-label="Switch to English">EN</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero wrap" id="home">
+      <div class="hero-content">
+        <span class="eyebrow" data-fr="Studio indépendant · NumWorks" data-en="Independent studio · NumWorks">Studio indépendant · NumWorks</span>
+        <h1>
+          <span data-fr="Le jeu vidéo," data-en="Gaming,">Le jeu vidéo,</span><br>
+          <span class="gradient-text" data-fr="sans limites." data-en="without limits.">sans limites.</span>
+        </h1>
+        <p data-fr="Absterbyte Studios imagine et développe des jeux ambitieux pour calculatrice NumWorks. Des univers familiers, repensés avec une touche unique."
+           data-en="Absterbyte Studios creates ambitious games for the NumWorks calculator. Familiar worlds, reimagined with a unique twist.">
+          Absterbyte Studios imagine et développe des jeux ambitieux pour calculatrice NumWorks. Des univers familiers, repensés avec une touche unique.
+        </p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#games" data-fr="Découvrir les jeux ↓" data-en="Explore the games ↓">Découvrir les jeux ↓</a>
+          <a class="button" href="#contact" data-fr="Contact professionnel" data-en="Business contact">Contact professionnel</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap" id="games">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow" data-fr="Nos projets" data-en="Our projects">Nos projets</span>
+          <h2 data-fr="Des jeux faits pour surprendre." data-en="Games made to surprise.">Des jeux faits pour surprendre.</h2>
+          <p class="section-intro" data-fr="Retrouve les projets du studio et télécharge les versions disponibles."
+             data-en="Discover the studio's projects and download available builds.">
+            Retrouve les projets du studio et télécharge les versions disponibles.
+          </p>
+        </div>
+      </div>
+
+      <div class="game-grid">
+        <article class="game-card">
+          <div class="game-art" aria-hidden="true"><span class="game-icon">🗡️</span></div>
+          <div class="game-body">
+            <div class="game-title-row">
+              <h3>The Legend of Zelda: Ocarina of Time — NES Edition</h3>
+              <span class="badge" data-fr="Disponible" data-en="Available">Disponible</span>
+            </div>
+            <p data-fr="Une réinterprétation complète d’Ocarina of Time, avec une direction artistique inspirée du tout premier Zelda. Conçu pour tourner sur calculatrice NumWorks."
+               data-en="A complete reinterpretation of Ocarina of Time, with an art direction inspired by the very first Zelda. Designed to run on the NumWorks calculator.">
+              Une réinterprétation complète d’Ocarina of Time, avec une direction artistique inspirée du tout premier Zelda. Conçu pour tourner sur calculatrice NumWorks.
+            </p>
+            <a class="button button-primary" href="downloads/ocarina-of-time.nwa" download
+               data-fr="Télécharger le jeu ↓" data-en="Download game ↓">Télécharger le jeu ↓</a>
+          </div>
+        </article>
+
+        <article class="game-card">
+          <div class="game-art" aria-hidden="true"><span class="game-icon">🎯</span></div>
+          <div class="game-body">
+            <div class="game-title-row">
+              <h3>Valorant 2D</h3>
+              <span class="badge badge-beta" data-fr="Bêta" data-en="Beta">Bêta</span>
+            </div>
+            <p data-fr="Un portage 2D en bêta avec des combats contre des bots, plusieurs personnages et deux cartes inspirées du jeu."
+               data-en="A 2D port in beta, featuring fights against bots, multiple characters, and two maps inspired by the game.">
+              Un portage 2D en bêta avec des combats contre des bots, plusieurs personnages et deux cartes inspirées du jeu.
+            </p>
+            <a class="button" href="downloads/valorant-2d.nwa" download
+               data-fr="Télécharger la bêta ↓" data-en="Download beta ↓">Télécharger la bêta ↓</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap" id="news">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow" data-fr="Le studio" data-en="From the studio">Le studio</span>
+          <h2 data-fr="Actualités & mises à jour." data-en="News & updates.">Actualités & mises à jour.</h2>
+        </div>
+      </div>
+
+      <div class="news-grid">
+        <article class="news-card">
+          <span class="news-label" data-fr="Projet en bêta" data-en="Beta project">Projet en bêta</span>
+          <h3>Valorant 2D</h3>
+          <p data-fr="Le projet est actuellement en bêta. Les combats contre des bots, les personnages et deux cartes sont au cœur de cette version."
+             data-en="The project is currently in beta. Bot battles, characters, and two maps are at the heart of this build.">
+            Le projet est actuellement en bêta. Les combats contre des bots, les personnages et deux cartes sont au cœur de cette version.
+          </p>
+        </article>
+        <article class="news-card">
+          <span class="news-label" data-fr="Projet du studio" data-en="Studio project">Projet du studio</span>
+          <h3>The Legend of Zelda: Ocarina of Time — NES Edition</h3>
+          <p data-fr="Une aventure réimaginée dans un style inspiré du premier Zelda, pensée pour la calculatrice NumWorks."
+             data-en="An adventure reimagined in a style inspired by the first Zelda, made for the NumWorks calculator.">
+            Une aventure réimaginée dans un style inspiré du premier Zelda, pensée pour la calculatrice NumWorks.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap" id="contact">
+      <div class="contact-card">
+        <div>
+          <span class="eyebrow" data-fr="Parlons de votre projet" data-en="Let's talk about your project">Parlons de votre projet</span>
+          <h2 data-fr="Contact professionnel." data-en="Business inquiries.">Contact professionnel.</h2>
+          <p data-fr="Pour toute demande professionnelle, collaboration ou question au sujet des projets, écris-nous par e-mail."
+             data-en="For business inquiries, collaborations, or questions about our projects, get in touch by email.">
+            Pour toute demande professionnelle, collaboration ou question au sujet des projets, écris-nous par e-mail.
+          </p>
+        </div>
+        <a class="button button-primary" href="mailto:axoul370@gmail.com">axoul370@gmail.com ↗</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner wrap">
+      <span>© <span id="year"></span> Absterbyte Studios</span>
+      <a href="#home" data-fr="Retour en haut ↑" data-en="Back to top ↑">Retour en haut ↑</a>
+    </div>
+  </footer>
+
+  <script>
+    const languageButton = document.getElementById("language-toggle");
+    let currentLanguage = "fr";
+
+    languageButton.addEventListener("click", () => {
+      currentLanguage = currentLanguage === "fr" ? "en" : "fr";
+      document.documentElement.lang = currentLanguage;
+
+      document.querySelectorAll("[data-fr][data-en]").forEach((element) => {
+        element.textContent = element.dataset[currentLanguage];
+      });
+
+      languageButton.textContent = currentLanguage === "fr" ? "EN" : "FR";
+      languageButton.setAttribute(
+        "aria-label",
+        currentLanguage === "fr" ? "Switch to English" : "Passer en français"
+      );
+
+      document.title = currentLanguage === "fr"
+        ? "Absterbyte Studios — Jeux NumWorks"
+        : "Absterbyte Studios — NumWorks Games";
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
